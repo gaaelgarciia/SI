@@ -1,16 +1,26 @@
 package es.udc.sistemasinteligentes;
 
+import java.util.ArrayList;
+
 public class Nodo {
     private Estado estado;
     private Nodo padre;
     private Accion accion;
-    private int coste;
 
-    public Nodo(Estado estado, Nodo padre, Accion accion, int coste) {
+    public Nodo(Estado estado, Nodo padre, Accion accion) {
         this.estado = estado;
         this.padre = padre;
         this.accion = accion;
-        this.coste = coste;
+    }
+
+    public Nodo[] reconstruirCamino() {
+        ArrayList<Nodo> camino = new ArrayList<Nodo>();
+        Nodo actual = this;
+        while (actual.getPadre() != null) {
+            actual = actual.getPadre();
+            camino.add(actual);
+        }
+        return camino.toArray(new Nodo[0]);
     }
 
     public Estado getEstado() {
@@ -25,9 +35,6 @@ public class Nodo {
         return accion;
     }
 
-    public int getCoste() {
-        return coste;
-    }
 
     @Override
     public String toString() {
@@ -35,7 +42,6 @@ public class Nodo {
                 "estado=" + estado +
                 ", padre=" + padre +
                 ", accion=" + accion +
-                ", coste=" + coste +
                 '}';
     }
 }
