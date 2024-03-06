@@ -34,7 +34,7 @@ public class Estrategia4 implements EstrategiaBusqueda {
                     explorados.add(estadoActual);
                     modificado = true;
                     System.out.println((i++) + " - Estado actual cambiado a " + estadoActual);
-                    node = new Nodo(estadoActual, node, acc);
+                    node = node.crearNodo(estadoActual, node, acc);
                     break;
                 }
                 else

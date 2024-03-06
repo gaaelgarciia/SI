@@ -17,10 +17,14 @@ public class Nodo {
         ArrayList<Nodo> camino = new ArrayList<Nodo>();
         Nodo actual = this;
         while (actual.getPadre() != null) {
-            actual = actual.getPadre();
             camino.add(actual);
+            actual = actual.getPadre();
         }
         return camino.toArray(new Nodo[0]);
+    }
+
+    public Nodo crearNodo(Estado estado, Nodo padre, Accion accion) {
+        return new Nodo(estado, padre, accion);
     }
 
     public Estado getEstado() {
