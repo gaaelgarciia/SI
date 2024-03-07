@@ -14,7 +14,8 @@ public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
         ArrayList<Estado> explorados = new ArrayList<Estado>();
         Estado estadoActual = p.getEstadoInicial();
         explorados.add(estadoActual);
-        Queue<Nodo> frontera = new LinkedList<Nodo>(); //Creation of the frontier
+        //Queue<Nodo> frontera = new LinkedList<>(); //Creation of the frontier
+        Stack<Nodo> frontera = new Stack<>();
         Nodo node = new Nodo(estadoActual, null, null); //Creation of the node
         frontera.add(node); //Add the node to the frontier
         int i = 1;
@@ -23,7 +24,8 @@ public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
 
         while (true) {
             if (!frontera.isEmpty()) {
-                node = frontera.poll();
+                // node = frontera.poll();
+                node = frontera.pop();
                 estadoActual = node.getEstado();
                 if (!p.esMeta(estadoActual)) {
                     System.out.println((i++) + " - " + estadoActual + " no es meta");
