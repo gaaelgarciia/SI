@@ -22,6 +22,7 @@ public class MainEj2a {
         EstrategiaBusqueda buscador = new EstrategiaBusquedaGrafo();
 
         Nodo[] solucion = buscador.soluciona(problema);
+
         ArrayList<Nodo> listaNodos = new ArrayList<>(Arrays.asList(solucion));
         Collections.reverse(listaNodos);
         for(Nodo i : listaNodos)
