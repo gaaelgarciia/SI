@@ -1,6 +1,7 @@
 package es.udc.sistemasinteligentes;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class Nodo implements Comparable<Nodo>{
     private Estado estado;
@@ -29,6 +30,7 @@ public class Nodo implements Comparable<Nodo>{
             camino.add(actual);
             actual = actual.getPadre();
         }
+        Collections.reverse(camino);
         return camino.toArray(new Nodo[0]);
     }
 

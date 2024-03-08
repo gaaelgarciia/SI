@@ -14,7 +14,7 @@ public class EstrategiaBusquedaAEstrella implements EstrategiaBusquedaInformada 
         Nodo node = new Nodo(estadoActual, null, null, h); //Creation of the node
         frontera.add(node); //Add the node to the frontier
 
-        int i = 1;
+        int i = 1, nCreados = 1;
 
         System.out.println((i++) + " - Empezando búsqueda en " + estadoActual);
 
@@ -28,6 +28,7 @@ public class EstrategiaBusquedaAEstrella implements EstrategiaBusquedaInformada 
                 explorados.add(estadoActual); //INSERT(N, E)
                 Nodo[] sucesores = new Nodo[0];
                 sucesores = node.sucesores(p, estadoActual, h); //H = sucesores(N)
+                nCreados += sucesores.length;
                 for (Nodo sucesor : sucesores) { //Para cada Nh en H
                     Estado sh = sucesor.getEstado(); //Sh es Nh.estado
                     System.out.println((i++) + " - RESULT(" + estadoActual + "," + sucesor.getAccion() + ")=" + sh);
@@ -51,6 +52,8 @@ public class EstrategiaBusquedaAEstrella implements EstrategiaBusquedaInformada 
             }
         }
         System.out.println((i++) + " - FIN - " + estadoActual);
+        System.out.println("Nodos expandidos: " + explorados.size());
+        System.out.println("Nodos creados: " + nCreados);
         return node.reconstruirCamino();
     }
 }

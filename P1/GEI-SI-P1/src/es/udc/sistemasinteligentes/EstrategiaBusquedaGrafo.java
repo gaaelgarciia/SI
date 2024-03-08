@@ -66,6 +66,7 @@ public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
         frontera.add(node); //Add the node to the frontier
 
         int i = 1;
+        int nCreados = 1;
 
         System.out.println((i++) + " - Empezando búsqueda en " + estadoActual);
 
@@ -80,14 +81,13 @@ public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
                 explorados.add(estadoActual); //INSERT(N, E)
                 Nodo[] sucesores = new Nodo[0];
                 sucesores = node.sucesores(p, estadoActual, null); //H = sucesores(N)
+                nCreados += sucesores.length;
                 for (Nodo sucesor : sucesores) { //Para cada Nh en H
                     Estado sh = sucesor.getEstado(); //Sh es Nh.estado
                     System.out.println((i++) + " - RESULT(" + estadoActual + "," + sucesor.getAccion() + ")=" + sh);
                     if (!explorados.contains(sh) && !frontera.contains(sucesor)) { // Si Nh.estado no en E ni en F
                         System.out.println((i++) + " - " + sh + " NO explorado");
-                        if(!frontera.contains(sucesor)) //Sh en F? NO
-                            frontera.add(sucesor); //Add the node to the frontier
-
+                        frontera.add(sucesor); //Add the node to the frontier
                         System.out.println((i++) + " - Estado actual cambiado a " + estadoActual);
                     } else { //Sh en E? SI
                         System.out.println((i++) + " - " + sh + " ya explorado");
@@ -98,6 +98,8 @@ public class EstrategiaBusquedaGrafo implements EstrategiaBusqueda {
             }
         }
         System.out.println((i++) + " - FIN - " + estadoActual);
+        System.out.println("Nodos expandidos: " + explorados.size());
+        System.out.println("Nodos creados: " + nCreados);
         return node.reconstruirCamino();
     }
 
