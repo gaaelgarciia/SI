@@ -12,9 +12,10 @@ public class MainEj2a {
 
     public static void main(String[] args) throws Exception {
         int[][] cuadrado = new int[][]{
-                {9,9,2},
-                {3,5,0},
-                {0,1,0},
+                {2,0,0,0},
+                {0,0,0,0},
+                {0,0,0,0},
+                {0,1,0,0},
         };
         ProblemaCuadradoMagico.EstadoCuadradoMagico cuadradoMagico = new ProblemaCuadradoMagico.EstadoCuadradoMagico(3, cuadrado);
         ProblemaBusqueda problema = new ProblemaCuadradoMagico(cuadradoMagico);

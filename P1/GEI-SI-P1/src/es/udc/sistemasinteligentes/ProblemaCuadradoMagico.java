@@ -1,5 +1,6 @@
 package es.udc.sistemasinteligentes;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Objects;
 
@@ -14,7 +15,7 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda{
             this.cuadrado = cuadrado;
         }
         public int getMaxN(){
-            return this.n*(this.n*this.n+1)/2;
+            return (this.n*(this.n*this.n+1))/2;
         }
 
         public int getN(){
@@ -99,15 +100,16 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda{
 
         @Override
         public boolean esAplicable(Estado es) {
-            EstadoCuadradoMagico estado = (EstadoCuadradoMagico) es;
-            for(int i = 0; i < estado.getN(); i++){
-                if(estado.getFila(i) == estado.getMaxN() || estado.getFila(i) + this.valor > estado.getMaxN()) return false;
-                if(estado.getColumna(i) == estado.getMaxN() || estado.getColumna(i) + this.valor > estado.getMaxN()) return false;
-            }
-            if(this.x == this.y
-                    && (estado.getDiagonal1() == estado.getMaxN() || estado.getDiagonal1() + this.valor > estado.getMaxN())) return false;
-            if((this.x == this.y || this.x == estado.getN()-this.x-1)
-                    && (estado.getDiagonal2() == estado.getMaxN() || estado.getDiagonal2() + this.valor > estado.getMaxN())) return false;
+            EstadoCuadradoMagico estadoCuadradoAplicado = (EstadoCuadradoMagico) aplicaA(es);
+            EstadoCuadradoMagico estadoCuadradoActual = (EstadoCuadradoMagico) es;
+            int resultado = estadoCuadradoActual.getMaxN();
+
+            if(estadoCuadradoActual.getElemCuadrado(x, y) != 0) return false;
+
+            if(estadoCuadradoAplicado.getFila(x) > resultado) return false;
+            if(estadoCuadradoAplicado.getColumna(y) > resultado) return false;
+            if(estadoCuadradoAplicado.getDiagonal1() > resultado) return false;
+            if(estadoCuadradoAplicado.getDiagonal2() > resultado) return false;
             return true;
         }
 
@@ -120,7 +122,7 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda{
                     cuadrado[i][j] = estado.getElemCuadrado(i, j);
                 }
             }
-            cuadrado[this.x][this.y] = this.valor;
+            cuadrado[x][y] = valor;
             return new EstadoCuadradoMagico(estado.getN(), cuadrado);
         }
     }
@@ -145,6 +147,32 @@ public class ProblemaCuadradoMagico extends ProblemaBusqueda{
 
     @Override
     public Accion[] acciones(Estado es) {
-        return new Accion[0];
+        ArrayList<Accion> accionesAplicadas = new ArrayList<>();
+        ArrayList<Integer> valoresUsados = new ArrayList<>();
+        ArrayList<Accion> accionesAplicables = new ArrayList<>();
+        EstadoCuadradoMagico estado = (EstadoCuadradoMagico) es;
+
+        for (int i = 0; i < estado.getN(); i++) {
+            for (int j = 0; j < estado.getN(); j++) {
+                if(estado.getElemCuadrado(i, j) != 0){
+                    accionesAplicadas.add(new AccionCuadrado(i, j, estado.getElemCuadrado(i, j)));
+                    valoresUsados.add(estado.getElemCuadrado(i, j));
+                }
+            }
+        }
+
+        for (int i = 0; i < estado.getN(); i++) {
+            for (int j = 0; j < estado.getN(); j++) {
+                if(estado.getElemCuadrado(i, j) == 0){
+                    for(int k = 1; k <= estado.getN()*estado.getN(); k++){
+                        if(new AccionCuadrado(i, j, k).esAplicable(estado) && !valoresUsados.contains(k)){
+                            accionesAplicables.add(new AccionCuadrado(i, j, k));
+                        }
+                    }
+                }
+            }
+        }
+
+        return accionesAplicables.toArray(new Accion[0]);
     }
 }

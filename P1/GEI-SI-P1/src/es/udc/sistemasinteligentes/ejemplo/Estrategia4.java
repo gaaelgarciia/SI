@@ -15,7 +15,7 @@ public class Estrategia4 implements EstrategiaBusqueda {
         Estado estadoActual = p.getEstadoInicial();
         explorados.add(estadoActual);
 
-        Nodo node = new Nodo(estadoActual, null, null); //Creation of the node
+        Nodo node = new Nodo(estadoActual, null, null, null); //Creation of the node
 
         int i = 1;
 
@@ -34,7 +34,7 @@ public class Estrategia4 implements EstrategiaBusqueda {
                     explorados.add(estadoActual);
                     modificado = true;
                     System.out.println((i++) + " - Estado actual cambiado a " + estadoActual);
-                    node = node.crearNodo(estadoActual, node, acc);
+                    node = node.crearNodo(estadoActual, node, acc, null);
                     break;
                 }
                 else
